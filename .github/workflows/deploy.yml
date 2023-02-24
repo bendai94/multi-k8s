@@ -14,12 +14,10 @@ jobs:
       - run: docker run -e CI=true bendai94/react-test npm test
  
       - run: docker build -t bendai94/multi-client-10-14 ./client
-      - run: docker build -t bendai94/multi-nginx-10-14 ./nginx
       - run: docker build -t bendai94/multi-server-10-14 ./server
       - run: docker build -t bendai94/multi-worker-10-14 ./worker
  
       - run: docker push bendai94/multi-client-10-14
-      - run: docker push bendai94/multi-nginx-10-14
       - run: docker push bendai94/multi-server-10-14
       - run: docker push bendai94/multi-worker-10-14
  
