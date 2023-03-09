@@ -1,8 +1,10 @@
-ame: Test MultiDocker
+name: Test MultiDocker
 on:
   pull_request:
     types: 
       - opened
+      - edited
+      - reopened
     branches:
       - main
  
