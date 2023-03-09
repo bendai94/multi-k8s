@@ -1,8 +1,12 @@
-name: Deploy MultiDocker
+name: Test MultiDocker
 on:
-  push:
+  pull_request:
+    types: 
+      - opened
+      - edited
+      - reopened
     branches:
-      - main # check your repo, your default branch might be master!
+      - dev
  
 jobs:
   build:
@@ -12,26 +16,3 @@ jobs:
       - run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - run: docker build -t bendai94/react-test -f ./client/Dockerfile.dev ./client
       - run: docker run -e CI=true bendai94/react-test npm test
- 
-      - run: docker build -t bendai94/multi-client-10-14 ./client
-      - run: docker build -t bendai94/multi-server-10-14 ./server
-      - run: docker build -t bendai94/multi-worker-10-14 ./worker
- 
-      - run: docker push bendai94/multi-client-10-14
-      - run: docker push bendai94/multi-server-10-14
-      - run: docker push bendai94/multi-worker-10-14
- 
-      - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*'
- 
-#      - name: Deploy to EB
-#        uses: einaregilsson/beanstalk-deploy@v18
-#        with:
-#          aws_access_key: ${{ secrets.AWS_ACCESS_KEY }}
-#          aws_secret_key: ${{ secrets.AWS_SECRET_KEY }}
-#          application_name: milti-docker
-#          environment_name: Miltidocker-env
-#          existing_bucket_name: elasticbeanstalk-us-east-1-720590719210
-#          region: us-east-1
-#          version_label: ${{ github.sha }}
-#          deployment_package: deploy.zip
