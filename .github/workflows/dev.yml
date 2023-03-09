@@ -1,8 +1,10 @@
 ame: Test MultiDocker
 on:
-  push:
+  pull_request:
+    types: 
+      - opened
     branches:
-      - devel
+      - main
  
 jobs:
   build:
